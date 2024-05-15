@@ -1,0 +1,25 @@
+# Exported from Render on 2024-05-15T15:19:44Z
+services:
+- type: web
+  name: tldrhistory
+  runtime: node
+  repo: https://github.com/RobertLeeMorgan/tldrhistory
+  plan: starter
+  envVars:
+  - key: MYSQL_PASSWORD
+    sync: false
+  - key: MYSQL_USER
+    sync: false
+  - key: MYSQL_DATABASE
+    sync: false
+  - key: JWT_SECRET
+    sync: false
+  region: frankfurt
+  buildCommand: npm i
+  startCommand: node app.js
+  disk:
+    name: mysql
+    mountPath: /var/lib/mysql
+    sizeGB: 1
+  rootDir: server
+version: "1"
