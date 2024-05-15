@@ -27,7 +27,7 @@ router.post(
       "password",
     )
       .isLength({ min: 6 }).withMessage("Password must be at least 6 characters.")
-      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i").withMessage("Must contain at least one uppercase letter and a special character.")
+      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/).withMessage("Must contain at least one uppercase letter and a digit.")
       .trim(),
     check("confirmation")
       .trim()
