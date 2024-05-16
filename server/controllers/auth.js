@@ -1,6 +1,6 @@
-const User = require("../models/user");
+const User = require("../models/users");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 
 exports.login = async (req, res, next) => {
@@ -14,8 +14,14 @@ exports.login = async (req, res, next) => {
     }
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      const token = jwt.sign({id: user.id, email: user.email}, process.env.JWT_SECRET, {expiresIn: '4h'})
-      res.status(200).json({ token: token, id: user.id, username: user.username });
+      const token = jwt.sign(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "4h" }
+      );
+      res
+        .status(200)
+        .json({ token: token, id: user.id, username: user.username });
     } else {
       const error = new Error("Authentication failed.");
       error.statusCode = 401;

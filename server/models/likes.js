@@ -3,7 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
 
-const Like = sequelize.define("like", {
+const Like = sequelize.define("likes", {
     userId: {
         type: Sequelize.INTEGER,
         primaryKey: true,

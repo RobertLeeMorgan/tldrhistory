@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
-const User = require("../models/user");
+const User = require("../models/users.js");
 
 const userController = require("../controllers/auth.js");
 
@@ -23,11 +23,11 @@ router.post(
         return true;
       })
       .normalizeEmail(),
-    check(
-      "password",
-    )
-      .isLength({ min: 6 }).withMessage("Password must be at least 6 characters.")
-      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/).withMessage("Must contain at least one uppercase letter and a digit.")
+    check("password")
+      .isLength({ min: 6 })
+      .withMessage("Password must be at least 6 characters.")
+      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/)
+      .withMessage("Must contain at least one uppercase letter and a digit.")
       .trim(),
     check("confirmation")
       .trim()

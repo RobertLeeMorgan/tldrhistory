@@ -1,10 +1,10 @@
 const sequelize = require("../util/database");
 const Sequelize = require("sequelize");
 
-const Post = require("../models/post");
+const Post = require("../models/posts");
 const Country = require("../models/countries");
 const Subject = require("../models/subjects");
-const Like = require("../models/like");
+const Like = require("../models/likes");
 const Population = require("../models/population");
 
 exports.getPopulation = async (req, res, next) => {
@@ -23,7 +23,7 @@ exports.getPopular = async (req, res, next) => {
     if (isNaN(year)) {
       return res.status(200);
     }
-    
+
     const centuryStartYear = Math.floor(year / 100) * 100;
     const centuryEndYear = centuryStartYear + 99;
 

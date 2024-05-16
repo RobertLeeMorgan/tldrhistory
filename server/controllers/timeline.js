@@ -1,10 +1,10 @@
 const sequelize = require("../util/database");
 const Sequelize = require("sequelize");
 
-const Post = require("../models/post");
+const Post = require("../models/posts");
 const Country = require("../models/countries");
 const Subject = require("../models/subjects");
-const User = require("../models/user");
+const User = require("../models/users");
 
 exports.getTimeline = async (req, res, next) => {
   try {

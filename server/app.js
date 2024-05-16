@@ -1,16 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const helmet = require('helmet')
-const compression = require('compression')
-require("dotenv").config()
+const helmet = require("helmet");
+const compression = require("compression");
+require("dotenv").config();
 
 const sequelize = require("./util/database");
-const Post = require("./models/post");
+const Post = require("./models/posts");
 const Country = require("./models/countries");
 const Subject = require("./models/subjects");
 const Topic = require("./models/topics");
-const User = require("./models/user");
-const Like = require('./models/like')
+const User = require("./models/users");
+const Like = require("./models/likes");
 
 const timelineRoutes = require("./routes/article");
 const authRoutes = require("./routes/auth");
@@ -20,15 +20,15 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static("dist"));
-app.use(helmet())
-app.use(compression())
+app.use(helmet());
+app.use(compression());
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next()
-})
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 app.use(timelineRoutes);
 app.use(authRoutes);
@@ -36,10 +36,10 @@ app.use(widgetRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
-  const message = error.message || "Internal server error."
+  const message = error.message || "Internal server error.";
   const data = error.data;
   res.status(status).json({ message: message, data: data });
-})
+});
 
 Country.hasMany(Post, {
   foreignKey: "countryId",
@@ -59,13 +59,10 @@ Post.belongsTo(User, {
 User.hasMany(Post, {
   foreignKey: "userId",
 });
-Like.belongsTo(Post, { foreignKey: 'postId' });
-Like.belongsTo(User, { foreignKey: 'userId' });
-Post.hasMany(Like, { foreignKey: 'postId' });
+Like.belongsTo(Post, { foreignKey: "postId" });
+Like.belongsTo(User, { foreignKey: "userId" });
+Post.hasMany(Like, { foreignKey: "postId" });
 
-sequelize
-  .sync()
-  .catch(() => {
-  });
+sequelize.sync().catch(() => {});
 
 app.listen(process.env.PORT || 3000);

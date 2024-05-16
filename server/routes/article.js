@@ -3,7 +3,7 @@ const router = express.Router();
 const { validatePost } = require("../middleware/validatePost.js");
 const isAuth = require("../middleware/isAuth");
 const allowAuth = require("../middleware/allowAuth");
-const Post = require("../models/post");
+const Post = require("../models/posts.js");
 const { check } = require("express-validator");
 
 const timeline = require("../controllers/timeline.js");
