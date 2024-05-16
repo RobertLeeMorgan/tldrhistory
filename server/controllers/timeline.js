@@ -87,9 +87,9 @@ exports.getTimeline = async (req, res, next) => {
       queryOptions.attributes.include.push([
         sequelize.literal(`(
           SELECT CASE WHEN COUNT(*) = 1 THEN true ELSE false END AS liked
-          FROM Likes
-          WHERE Likes.postId = posts.id
-            AND Likes.userId = ${req.id}
+          FROM likes
+          WHERE likes.postId = posts.id
+            AND likes.userId = ${req.id}
         )`),
         "liked",
       ]);
