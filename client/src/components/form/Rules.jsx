@@ -25,14 +25,14 @@ export default function Rules() {
           Use modern day equivalents for location, e.g. Persia = Iran.
         </p>
         <p className="py-2">
-          Culture covers art, music, religion, civilizations. Intellectual
+          Culture covers art, music, religion, mythology, civilizations. Intellectual
           covers science, philosophy, literature. Military covers war, battles,
-          weaponary. Politics covers government, monarchy, dynasty.
+          weaponary. Politics covers government, monarchy, dynasty. Other for anything that doesn't fit these categories.
         </p>
         <p className="py-2">For now we only go as far as the 19th Century.</p>
       </div>
       <form method="dialog" className="modal-backdrop">
-        <button>close</button>
+        <button>Close</button>
       </form>
     </dialog>
   );

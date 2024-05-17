@@ -17,7 +17,7 @@ export default function Civil({ civil, year }) {
   }, [year]);
   return (
     <div
-      className={`bottom-0 w-screen left-0 overflow-hidden scroll-smooth shadow`}
+      className='overflow-hidden scroll-smooth'
       ref={tableRef}
     >
       <Table civil={civil} />

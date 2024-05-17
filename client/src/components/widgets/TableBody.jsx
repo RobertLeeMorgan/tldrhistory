@@ -1,7 +1,7 @@
 import TableRow from "./TableRow";
 export default function TableBody({ centuries, continents, civil }) {
   return (
-    <tbody className='h-min w-min '>
+    <tbody>
       {continents.map((continent) => {
         const civilizations = civil.civil.filter(
           (entry) => entry.country.continent === continent

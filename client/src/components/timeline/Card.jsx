@@ -60,7 +60,7 @@ export default function Card({
           </p>
         )
       )}
-      {userId != isAuth.id && <Like liked={liked} id={id} />}
+      {userId != isAuth.id ? <Like liked={liked} id={id} /> : <Link to={'/login'}/>}
     </div>
   );
 }

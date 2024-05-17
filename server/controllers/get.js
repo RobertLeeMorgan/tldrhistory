@@ -50,7 +50,7 @@ exports.getUser = async (req, res, next) => {
         [Sequelize.Op.or]: [
           { userId: req.params.id },
           sequelize.literal(
-            `exists (select 1 from Likes where Likes.postId = posts.id and Likes.userId = ${req.params.id})`
+            `exists (select 1 from likes where likes.postId = posts.id and likes.userId = ${req.params.id})`
           ),
         ],
       },
@@ -62,9 +62,9 @@ exports.getUser = async (req, res, next) => {
       queryOptions.attributes.include.push([
         sequelize.literal(`(
             SELECT CASE WHEN COUNT(*) = 1 THEN true ELSE false END AS liked
-            FROM Likes
-            WHERE Likes.postId = posts.id
-              AND Likes.userId = ${req.id}
+            FROM likes
+            WHERE likes.postId = posts.id
+              AND likes.userId = ${req.id}
           )`),
         "liked",
       ]);
@@ -82,7 +82,7 @@ exports.getValues = async (req, res, next) => {
     const countries = await Country.findAll({
       attributes: ["name"],
     });
-    const subjects = await Subject.findAll();
+    const subjects = await Subject.findAll({ order: [["id", "ASC"]] });
     res.json({ countries, subjects });
   } catch (err) {
     next(err);
@@ -98,8 +98,6 @@ exports.getArticle = async (req, res, next) => {
           through: {
             attributes: [],
           },
-          attributes: ["subject"],
-          raw: true,
           as: "subjects",
         },
       ],

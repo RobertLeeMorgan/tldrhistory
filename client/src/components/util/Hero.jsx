@@ -1,5 +1,5 @@
 export default function Hero({children}) {
-  const num = Math.floor(Math.random() * 6) + 1;
+  const num = Math.floor(Math.random() * 5) + 1;
   return (
     <div
       className="hero min-h-screen"

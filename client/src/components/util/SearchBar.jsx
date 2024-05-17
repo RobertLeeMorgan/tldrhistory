@@ -78,7 +78,9 @@ export default function SearchBar({ handleOpen, handleSort }) {
           data-tip="Display widgets"
         >
           <button
-            className="btn btn-circle border border-black z-50 xl:btn-lg hover:border-gray-300 hover:border"
+            className={`btn btn-circle border border-black z-50 xl:btn-lg hover:border-gray-300 hover:border transform transition-transform ease-in-out ${
+              widgetDisplay ? "" : "rotate-180"
+            }`}
             onClick={() => {
               setWidgetDisplay(!widgetDisplay);
             }}
@@ -90,21 +92,12 @@ export default function SearchBar({ handleOpen, handleSort }) {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              {widgetDisplay ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 15l7-7 7 7"
-                />
-              )}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </button>
         </div>

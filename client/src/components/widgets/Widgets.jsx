@@ -41,7 +41,7 @@ export default function Widgets({year}) {
 
   return (
     <>
-      <div className="stats bg-purple-800 stats-vertical border bottom-0 left:0 md:right-0 border-t-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-max ">
+      <div className="stats bg-purple-800 stats-vertical border bottom-0 left:0 md:right-0 border-t-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-min ">
         <Stats
           value={getCentury(year)}
           desc={year > 0 ? "Century CE" : "Century BCE"}

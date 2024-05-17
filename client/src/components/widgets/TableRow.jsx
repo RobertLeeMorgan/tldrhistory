@@ -1,6 +1,6 @@
 export default function TableRow({ centuries, continent, rowIndex, row }) {
   return (
-    <tr key={`${continent}-${rowIndex}`}>
+    <tr key={`${continent}-${rowIndex}`} >
       {rowIndex === 0 && (
         <td className="hidden md:table-cell left-0 h-full fixed bg-slate-950">
           <div className="md:w-40 md:text-nowrap text-center text-slate-300">
@@ -37,7 +37,7 @@ export default function TableRow({ centuries, continent, rowIndex, row }) {
 
             return (
               <td
-                className="text-center text-sm bg-fuchsia-700 border border-slate-900 border-2 rounded-md shadow truncate"
+                className="text-center text-sm bg-fuchsia-700 border border-slate-900 border-2 rounded-md shadow truncate "
                 key={`${continent}-${century}-${rowIndex}-${index}`}
                 colSpan={colspan}
               >

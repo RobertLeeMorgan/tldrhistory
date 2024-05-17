@@ -1,9 +1,11 @@
 import { queryClient, like } from "../../util/http";
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../context/AuthContext"
 
 export default function Like({ liked, id }) {
 const {isAuth} = useAuth()
+const navigate = useNavigate()
 
   const { mutate: likeMutate } = useMutation({
     mutationFn: like,
