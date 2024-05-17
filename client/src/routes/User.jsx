@@ -6,7 +6,7 @@ import Timeline from "../components/timeline/Timeline";
 
 export default function User() {
   const params = useParams();
-  const { isAuth } = useAuth();
+  const { isAuth, logout } = useAuth();
 
   const {
     data,
@@ -24,7 +24,13 @@ export default function User() {
       const nextPage = lastPage.length ? allPages.length + 1 : undefined;
       return nextPage;
     },
-    throwOnError: true,
+    onError: (error) => {
+      if (error.message === "jwt expired") {
+        logout();
+        toast("Your session has expired, you have been logged out.");
+      } else {
+        throw error
+      }}
   });
 
   return (

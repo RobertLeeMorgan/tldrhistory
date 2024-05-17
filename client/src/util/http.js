@@ -157,7 +157,7 @@ export async function login({ email, password }) {
     }
     const responseData = await res.json();
     const { token, id } = responseData;
-    const remainingMilliseconds = 60 * 60 * 4000;
+    const remainingMilliseconds = 60 * 60 * 11900;
     const expiryDate = new Date(new Date().getTime() + remainingMilliseconds);
 
     localStorage.setItem("token", token);

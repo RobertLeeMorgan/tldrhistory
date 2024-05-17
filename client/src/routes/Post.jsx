@@ -13,9 +13,16 @@ export default function Post() {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createPost,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["posts", "civil"] });
       toast.success("Your article was successfully posted!");
       navigate("/");
+    },
+    onError: (error) => {
+      if (error.message === "jwt expired") {
+        logout();
+        toast("Your session has expired, please log in again.");
+        navigate("/login");
+      }
     },
   });
 

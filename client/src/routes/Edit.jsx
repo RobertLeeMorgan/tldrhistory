@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 export default function Edit() {
   const navigate = useNavigate();
   const params = useParams();
-  const { isAuth } = useAuth();
+  const { isAuth, logout } = useAuth();
 
   const { data, isPending: loading } = useQuery({
     queryKey: ["posts", params.id],
@@ -23,6 +23,13 @@ export default function Edit() {
       toast.success("Your article was successfully edited!");
       navigate("/");
     },
+    onError: (err) => {
+      if (err.message === "jwt expired") {
+        logout();
+        toast("Your session has expired, please log in again.");
+        navigate("/login");
+      }
+    }
   });
 
   function handleSubmit(formData) {

@@ -13,7 +13,7 @@ import Card from "./Card";
 
 export default function TimelinePoint({ details, even, innerRef }) {
   const navigate = useNavigate();
-  const { isAuth } = useAuth();
+  const { isAuth, logout } = useAuth();
   const { updateYear } = useYear();
   const { ref, inView, entry } = useInView({
     rootMargin: "0px 0px -70% 0px",
@@ -25,12 +25,18 @@ export default function TimelinePoint({ details, even, innerRef }) {
       return !details.liked;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["posts", "civil"] });
       toast.success("Your article has been deleted!");
       navigate("/");
     },
     onError: () => {
-      toast.error("Something went wrong, please try again later.");
+      if (error.message === "jwt expired") {
+        logout();
+        toast("Your session has expired, please log in again.");
+        navigate("/login");
+      } else {
+        toast.error("Something went wrong, please try again later.");
+      }
     },
   });
 

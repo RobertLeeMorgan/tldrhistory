@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import { fetchPosts } from "../util/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const initialFilter = {
@@ -18,7 +19,8 @@ export default function HomePage() {
   };
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [filter, setFilter] = useState(initialFilter);
-  const { isAuth } = useAuth();
+  const { isAuth, logout } = useAuth();
+  const navigate = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -64,8 +66,15 @@ export default function HomePage() {
         const nextPage = lastPage.length ? allPages.length + 1 : undefined;
         return nextPage;
       },
-      throwOnError: true,
-    });
+      onError: (error) => {
+        if (error.message === "jwt expired") {
+          logout();
+          toast("Your session has expired.");
+          navigate("/");
+        } else {
+          throw error
+        }}
+    })
 
   return (
     <>
