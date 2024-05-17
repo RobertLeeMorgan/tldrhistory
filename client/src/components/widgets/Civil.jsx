@@ -20,7 +20,7 @@ export default function Civil({ civil, year }) {
       className='overflow-hidden scroll-smooth'
       ref={tableRef}
     >
-      <Table display={display}civil={civil} />
+      <Table civil={civil} />
     </div>
   );
 }
