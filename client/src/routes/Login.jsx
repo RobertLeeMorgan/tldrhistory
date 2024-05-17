@@ -34,7 +34,9 @@ export default function Login() {
       className="flex flex-col items-center max-w-3xl sm:px-4"
       onSubmit={handleSubmit}
     >
-      <h1 className="mb-6 text-4xl font-bold text-slate-200 text-center">Login</h1>
+      <h1 className="mb-6 text-4xl font-bold text-slate-200 text-center">
+        Login
+      </h1>
       <EmailInput />
       <PasswordInput />
       {isPending ? (
@@ -43,7 +45,7 @@ export default function Login() {
           Logging In
         </button>
       ) : (
-        <button type="submit" className="btn btn-secondary mt-4">
+        <button type="submit" className="btn btn-secondary my-4">
           Login
         </button>
       )}

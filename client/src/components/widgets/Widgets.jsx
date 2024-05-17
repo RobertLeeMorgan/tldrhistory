@@ -41,7 +41,7 @@ export default function Widgets({year}) {
 
   return (
     <>
-      <div className="stats bg-purple-800 stats-vertical border bottom-0 left:0 md:right-0 border-t-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-min ">
+      <div className="stats bg-purple-800 stats-vertical border bottom-0 left:0 md:right-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-min ">
         <Stats
           value={getCentury(year)}
           desc={year > 0 ? "Century CE" : "Century BCE"}
@@ -60,7 +60,7 @@ export default function Widgets({year}) {
             name.length < 8
               ? "text-xl leading-6"
               : "text-sm leading-2"
-          } md:text-xl md:leading-5 font-semibold text-ellipsis overflow-hidden text-wrap w-40 text-center`}
+          } md:text-xl md:leading-5 text-slate-300 font-semibold text-ellipsis overflow-hidden text-wrap w-40 text-center`}
         />
       </div>
     </>

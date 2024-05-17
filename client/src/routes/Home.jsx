@@ -89,7 +89,7 @@ export default function HomePage() {
               <h1 className="mb-5 text-5xl font-bold text-slate-200">
                 TLDR History;
               </h1>
-              <p className="mb-12 text-slate-300">
+              <p className="mb-12 text-slate-300 text-lg">
                 Welcome to TLDR History! A big picture, non-academic visual
                 database of pop world history.
               </p>

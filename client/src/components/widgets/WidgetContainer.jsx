@@ -17,7 +17,7 @@ export default function WidgetContainter({ widgetDisplay }) {
     <div
       className={`${
         widgetDisplay ? "translate-y-0" : "translate-y-full"
-      } fixed w-screen bottom-0 z-40 transform duration-300 ease-in-out`}
+      } fixed w-screen bottom-0 z-30 transform duration-300 ease-in-out`}
     >
       {civil && (
         <>

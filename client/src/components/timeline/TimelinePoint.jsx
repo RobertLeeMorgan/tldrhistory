@@ -48,9 +48,13 @@ export default function TimelinePoint({ details, even, innerRef }) {
 
   useEffect(() => {
     if (inView) {
-      const date = entry.target.textContent;
+      const element = entry.target;
+      const date = element.textContent;
       const year = extractYear(date);
       updateYear(year);
+      element.classList.add("text-slate-100");
+    } else if (entry) {
+      entry.target.classList.remove("text-slate-100");
     }
   }, [inView, entry, updateYear]);
 

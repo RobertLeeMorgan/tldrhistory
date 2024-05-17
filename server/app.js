@@ -63,6 +63,6 @@ Like.belongsTo(Post, { foreignKey: "postId" });
 Like.belongsTo(User, { foreignKey: "userId" });
 Post.hasMany(Like, { foreignKey: "postId" });
 
-sequelize.sync().catch(() => {});
+sequelize.sync().catch();
 
 app.listen(3000);

@@ -54,17 +54,17 @@ export default function Register() {
       <EmailInput />
       <PasswordInput />
       <PasswordInput confirm />
-      {isError && <AlertMessage message={error.message} />}
       {isPending ? (
         <button className="btn mt-4">
           <span className="loading loading-spinner"></span>
           Registering
         </button>
       ) : (
-        <button type="submit" className="btn btn-secondary mt-4">
+        <button type="submit" className="btn btn-secondary my-4">
           Sign Up
         </button>
       )}
+      {isError && <AlertMessage message={error.message} />}
     </form>
   );
 }

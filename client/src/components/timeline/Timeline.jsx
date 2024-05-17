@@ -31,7 +31,7 @@ export default function Timeline({
 
   return (
     <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical my-5 mb-60">
-      {data.pages.map((page, pageIndex) =>
+      {data.pages && data.pages.map((page, pageIndex) =>
         page.map((e, cardIndex, arr) => {
           const isLastCard =
             pageIndex === data.pages.length - 1 && cardIndex === arr.length - 1;
@@ -49,7 +49,7 @@ export default function Timeline({
         })
       )}
       {!hasNextPage && (
-        <p className="text-center font-mono italic text-gray-300 mt-5 text-xl">
+        <p className="text-center font-mono italic text-slate-100 mt-5 text-xl">
           You have reached the end of time.
         </p>
       )}
