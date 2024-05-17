@@ -31,12 +31,14 @@ export default function Timeline({
 
   return (
     <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical my-5 mb-60">
-      {data.pages && data.pages.map((page, pageIndex) =>
-        page.map((e, cardIndex, arr) => {
-          const isLastCard =
-            pageIndex === data.pages.length - 1 && cardIndex === arr.length - 1;
+      {data.pages &&
+        data.pages.map((page, pageIndex) =>
+          page.map((e, cardIndex, arr) => {
+            const isLastCard =
+              pageIndex === data.pages.length - 1 &&
+              cardIndex === arr.length - 1;
 
-          return (
+            return (
               <TimelinePoint
                 liked={e.liked}
                 details={e}
@@ -45,9 +47,9 @@ export default function Timeline({
                 even={cardIndex % 2 === 0}
                 innerRef={isLastCard ? ref : null}
               />
-          );
-        })
-      )}
+            );
+          })
+        )}
       {!hasNextPage && (
         <p className="text-center font-mono italic text-slate-100 mt-5 text-xl">
           You have reached the end of time.
