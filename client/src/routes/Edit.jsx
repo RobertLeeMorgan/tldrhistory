@@ -10,9 +10,9 @@ export default function Edit() {
   const params = useParams();
   const { isAuth, logout } = useAuth();
 
-  const { data, isPending: loading } = useQuery({
+  const { data, isPending: loading, failureReason } = useQuery({
     queryKey: ["posts", params.id],
-    queryFn: ({ signal }) => fetchArticle({ signal, id: params.id }),
+    queryFn: ({ signal }) => fetchArticle({ signal, id: params.id, token: isAuth.token }),
     throwOnError: true,
   });
 
@@ -23,14 +23,13 @@ export default function Edit() {
       toast.success("Your article was successfully edited!");
       navigate("/");
     },
-    onError: (err) => {
-      if (err.message === "jwt expired") {
-        logout();
-        toast("Your session has expired, please log in again.");
-        navigate("/login");
-      }
-    }
   });
+
+  if(failureReason && failureReason.message === 'jwt expired' || isError && error.message === "jwt expired") {
+      logout();
+      toast("Your session has expired, please log in again.");
+      navigate("/login");
+    }
 
   function handleSubmit(formData) {
     mutate({ id: params.id, article: formData, token: isAuth.token });

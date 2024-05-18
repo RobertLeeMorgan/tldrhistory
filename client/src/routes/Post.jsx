@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Post() {
   const navigate = useNavigate();
-  const { isAuth } = useAuth();
+  const { isAuth, logout } = useAuth();
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createPost,
@@ -17,14 +17,13 @@ export default function Post() {
       toast.success("Your article was successfully posted!");
       navigate("/");
     },
-    onError: (error) => {
-      if (error.message === "jwt expired") {
-        logout();
-        toast("Your session has expired, please log in again.");
-        navigate("/login");
-      }
-    },
   });
+
+  if(isError && error.message === "jwt expired") {
+    logout();
+    toast("Your session has expired, please log in again.");
+    navigate("/login");
+  }
 
   function handleSubmit(formData) {
     mutate({ article: formData, token: isAuth.token });

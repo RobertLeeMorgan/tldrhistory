@@ -19,7 +19,7 @@ export default function TimelinePoint({ details, even, innerRef }) {
     rootMargin: "0px 0px -70% 0px",
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending, isError, error } = useMutation({
     mutationFn: deleteArticle,
     optimisticResponse: () => {
       return !details.liked;
@@ -29,16 +29,13 @@ export default function TimelinePoint({ details, even, innerRef }) {
       toast.success("Your article has been deleted!");
       navigate("/");
     },
-    onError: () => {
-      if (error.message === "jwt expired") {
-        logout();
-        toast("Your session has expired, please log in again.");
-        navigate("/login");
-      } else {
-        toast.error("Something went wrong, please try again later.");
-      }
-    },
   });
+
+  if(isError && error.message === 'jwt expired') {
+    navigate('/login')
+    logout()
+    toast('Your session has expired, please log back in.')
+  }
 
   const isMobile = window.innerWidth <= 768;
 
@@ -52,9 +49,9 @@ export default function TimelinePoint({ details, even, innerRef }) {
       const date = element.textContent;
       const year = extractYear(date);
       updateYear(year);
-      element.classList.add("text-slate-100");
+      element.classList.add("text-slate-50");
     } else if (entry) {
-      entry.target.classList.remove("text-slate-100");
+      entry.target.classList.remove("text-slate-50");
     }
   }, [inView, entry, updateYear]);
 

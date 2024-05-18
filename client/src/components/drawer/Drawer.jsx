@@ -55,43 +55,27 @@ export default function Drawer({ onSubmit, onReset, filter }) {
               defaultValue={filter.year_end}
             />
           </DrawerCollapse>
-          <div className="relative flex items-center my-12">
+          <div className="relative flex items-center justify-center my-12">
             <input
               type="text"
               placeholder="Search"
               name="search"
-              className="input input-bordered border-r-0 focus:ring-1 focus:ring-secondary focus:border-transparent rounded-r-none flex"
+              className="input input-bordered focus:ring-1 focus:ring-secondary focus:border-transparent flex w-64"
               defaultValue={filter.search}
             />
-            <button type="submit" className="btn btn-secondary rounded-l-none">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-search"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <circle cx="10" cy="10" r="7" />
-                <line x1="21" y1="21" x2="15" y2="15" />
-              </svg>
-            </button>
           </div>
-          <button type="submit" className="btn">
+          <div className="items-center justify-center flex flex-col">
+          <button type="submit" className="btn w-64">
             Apply
           </button>
           <button
             type="button"
-            className="btn btn-secondary mt-4"
+            className="btn btn-secondary mt-4 w-64"
             onClick={onReset}
           >
             Clear
           </button>
+          </div>
         </form>
       </div>
     </div>

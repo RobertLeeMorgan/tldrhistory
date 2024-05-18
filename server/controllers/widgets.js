@@ -20,7 +20,7 @@ exports.getPopular = async (req, res, next) => {
   try {
     const { year } = req.query;
 
-    if (isNaN(year)) {
+    if (isNaN(year) || year === null) {
       return res.status(200);
     }
 

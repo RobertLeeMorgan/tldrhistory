@@ -37,39 +37,43 @@ export async function fetchUser({ page, params, token }) {
   return articles;
 }
 
-export async function fetchValues() {
-  const res = await fetch("/api/form");
+export async function fetchValues({ token }) {
+  const res = await fetch("/api/form", {
+    headers: { Authorization: "Bearer " + token },
+  });
   await handleResponseError(res);
   const values = await res.json();
   return values;
 }
 
-export async function fetchArticle({ id }) {
-  const res = await fetch(`/api/edit/${id}`);
+export async function fetchArticle({ id, token }) {
+  const res = await fetch(`/api/edit/${id}`, {
+    headers: { Authorization: "Bearer " + token },
+  });
   await handleResponseError(res);
   const article = await res.json();
   return article;
 }
 
 export async function fetchPopulation() {
-  const res = await fetch('/api/population')
+  const res = await fetch("/api/population");
   await handleResponseError(res);
-  const population = await res.json()
-  return population
+  const population = await res.json();
+  return population;
 }
 
 export async function fetchPopular(year) {
-  const res = await fetch(`/api/popular?year=${year}`)
+  const res = await fetch(`/api/popular?year=${year}`);
   await handleResponseError(res);
-  const population = await res.json()
-  return population
+  const population = await res.json();
+  return population;
 }
 
 export async function fetchCivil() {
-  const res = await fetch('/api/civil')
+  const res = await fetch("/api/civil");
   await handleResponseError(res);
-  const civil = await res.json()
-  return civil
+  const civil = await res.json();
+  return civil;
 }
 
 //Post requests
@@ -138,7 +142,6 @@ export async function like({ id, token }) {
   }
   return true;
 }
-
 
 //AUTH requests
 

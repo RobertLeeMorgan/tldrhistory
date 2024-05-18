@@ -4,7 +4,6 @@ export default function Menu({
   widgetDisplay,
   handleClick,
   handleSort,
-  handleOpen,
 }) {
   return (
     <div className="menu fixed z-40 top-28 right-0 lg:right-2 xl:top-20 xl:right-4 2xl:right-6 2xl:top-28 w-max">
@@ -33,7 +32,6 @@ export default function Menu({
         <label
           htmlFor="my-drawer"
           className="btn drawer-button z-50 btn-circle btn-md xl:btn-lg mb-3 border border-black hover:border-gray-400 hover:border"
-          onClick={handleOpen}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

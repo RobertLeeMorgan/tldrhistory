@@ -2,7 +2,7 @@ import { useState } from "react";
 import WidgetContainer from "../widgets/WidgetContainer";
 import Menu from "../widgets/Menu";
 
-export default function SearchBar({ handleOpen, handleSort }) {
+export default function SearchBar({ handleSort }) {
   const [widgetDisplay, setWidgetDisplay] = useState(false);
 
   function handleClick() {
@@ -15,7 +15,6 @@ export default function SearchBar({ handleOpen, handleSort }) {
         widgetDisplay={widgetDisplay}
         handleClick={handleClick}
         handleSort={handleSort}
-        handleOpen={handleOpen}
       />
       <WidgetContainer widgetDisplay={widgetDisplay} />
     </>

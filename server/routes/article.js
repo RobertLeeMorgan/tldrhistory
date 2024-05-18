@@ -12,11 +12,11 @@ const postArticles = require("../controllers/post.js");
 
 router.get("/api/articles", allowAuth, timeline.getTimeline);
 
-router.get("/api/form", getAritcles.getValues);
+router.get("/api/form", isAuth, getAritcles.getValues);
 
 router.get("/api/user/:id", allowAuth, getAritcles.getUser);
 
-router.get("/api/edit/:id", getAritcles.getArticle);
+router.get("/api/edit/:id", isAuth, getAritcles.getArticle);
 
 router.post("/api/edit/:id", isAuth, validatePost, postArticles.edit);
 

@@ -6,6 +6,9 @@ import Rules from "./Rules";
 import useDateInputs from "../../hooks/useDateInputs";
 import AlertMessage from "../util/AlertMessage";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Form({
   onSubmit,
@@ -17,12 +20,26 @@ export default function Form({
 }) {
   const [checkDates, handleDateChange] = useDateInputs(article);
   const [errorMessage, setErrorMessage] = useState("");
+  const { isAuth, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const { isLoading, data } = useQuery({
+  const {
+    isLoading,
+    data,
+    failureReason,
+  } = useQuery({
     queryKey: ["values"],
-    queryFn: fetchValues,
+    queryFn: () => fetchValues({ token: isAuth.token }),
     throwOnError: true,
   });
+
+  if (
+    (failureReason && failureReason.message === "jwt expired") 
+  ) {
+    navigate("/login");
+    toast("Your session has expired, please log back in.");
+    logout();
+  }
 
   if (isLoading) {
     return <span className="loading loading-spinner loading-md"></span>;

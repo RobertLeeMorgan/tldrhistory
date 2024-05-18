@@ -2,26 +2,30 @@ import { queryClient, like } from "../../util/http";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 export default function Like({ liked, id }) {
   const { isAuth, logout } = useAuth();
   const navigate = useNavigate();
 
-  const { mutate: likeMutate } = useMutation({
+  const {
+    mutate: likeMutate,
+    isError,
+    error,
+  } = useMutation({
     mutationFn: like,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
-    onError: (error) => {
-      if (error.message === "jwt expired") {
-        logout();
-        toast("Your session has expired, please log in again.");
-        navigate("/login");
-      } else {
-        toast.error("Failed to like article. Please try again later.");
-      }
-    },
   });
+
+  if (isError && error.message === "jwt expired") {
+    logout();
+    toast("Your session has expired, please log in again.");
+    navigate("/login");
+  } else if (isError) {
+    toast.error("Failed to like article, please try again later.");
+  }
 
   function handleClick() {
     if (isAuth.token) {

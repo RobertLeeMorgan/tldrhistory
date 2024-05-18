@@ -6,6 +6,7 @@ import { useState } from "react";
 import { fetchPosts } from "../util/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function HomePage() {
   const initialFilter = {
@@ -17,10 +18,9 @@ export default function HomePage() {
     search: "",
     sortBy: true,
   };
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [filter, setFilter] = useState(initialFilter);
   const { isAuth, logout } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -37,16 +37,12 @@ export default function HomePage() {
       ...prevFilter,
       ...newFilter,
     }));
-    setIsDrawerOpen(false);
+    document.getElementById(`my-drawer`).checked = false;
   }
 
   function handleReset() {
     setFilter(initialFilter);
-    setIsDrawerOpen(false);
-  }
-
-  function openDrawer() {
-    setIsDrawerOpen(true);
+    document.getElementById(`my-drawer`).checked = false;
   }
 
   function handleSort() {
@@ -56,32 +52,37 @@ export default function HomePage() {
     }));
   }
 
-  const { data, status, fetchNextPage, isFetchingNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: ["posts", filter],
-      queryFn: (pageParam) =>
-        fetchPosts({ page: pageParam, filter, token: isAuth.token }),
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = lastPage.length ? allPages.length + 1 : undefined;
-        return nextPage;
-      },
-      onError: (error) => {
-        if (error.message === "jwt expired") {
-          logout();
-          toast("Your session has expired.");
-          navigate("/");
-        } else {
-          throw error
-        }}
-    })
+  const {
+    data,
+    status,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isError,
+    error
+  } = useInfiniteQuery({
+    queryKey: ["posts", filter],
+    queryFn: (pageParam) =>
+      fetchPosts({ page: pageParam, filter, token: isAuth.token }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = lastPage.length ? allPages.length + 1 : undefined;
+      return nextPage;
+    },
+  });
+
+  if (isError && error.message === "jwt expired") {
+    navigate("/login");
+    logout();
+    toast("Your session has expired, please log in.");
+  } else if (isError){
+    throw error
+  }
 
   return (
     <>
-      <SearchBar handleOpen={openDrawer} handleSort={handleSort} />
-      {isDrawerOpen && (
-        <Drawer onSubmit={handleSubmit} onReset={handleReset} filter={filter} />
-      )}
+      <SearchBar handleSort={handleSort} />
+      <Drawer onSubmit={handleSubmit} onReset={handleReset} filter={filter} />
       <div className="text-center text-neutral-content mt-40">
         <div className="max-w-md">
           {!isAuth.token && (

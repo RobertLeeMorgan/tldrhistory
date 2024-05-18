@@ -8,12 +8,15 @@ module.exports = (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
   let decodedToken;
-  decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    req.id = decodedToken.id;
 
-  if (!decodedToken) {
     return next();
+  } catch (err) {
+    
+    const error = new Error(err.message);
+    error.statusCode = 500;
+    return next(error);
   }
-  
-  req.id = decodedToken.id;
-  return next();
 };

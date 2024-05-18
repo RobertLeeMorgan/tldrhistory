@@ -24,7 +24,7 @@ export default function Timeline({
   if (data.pages.every((page) => page.length === 0)) {
     return (
       <p className="text-center font-mono italic text-slate-300 mt-2 text-xl">
-        No articles posted.
+        No articles found.
       </p>
     );
   }

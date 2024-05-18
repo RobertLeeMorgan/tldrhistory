@@ -2,11 +2,14 @@ import { useParams } from "react-router-dom";
 import { fetchUser } from "../util/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Timeline from "../components/timeline/Timeline";
 
 export default function User() {
   const params = useParams();
   const { isAuth, logout } = useAuth();
+  const navigate = useNavigate();
 
   const {
     data,
@@ -14,6 +17,8 @@ export default function User() {
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
+    isError,
+    error,
     isPending,
   } = useInfiniteQuery({
     queryKey: ["posts", params],
@@ -23,23 +28,24 @@ export default function User() {
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = lastPage.length ? allPages.length + 1 : undefined;
       return nextPage;
-    },
-    onError: (error) => {
-      if (error.message === "jwt expired") {
-        logout();
-        toast("Your session has expired, you have been logged out.");
-      } else {
-        throw error
-      }}
+    }
   });
+
+  if (isError && error.message === "jwt expired") {
+    navigate("/login");
+    logout();
+    toast("Your session has expired, please log in.");
+  } else if (isError){
+    throw error
+  }
 
   return (
     <div className="text-center text-neutral-content mt-40">
       <div className="max-w-md">
-        {isPending ? (
-          null
-        ) : (
-          <h1 className="mb-12 text-5xl font-bold text-slate-200">{`${data.pages[0][0].user.username}'s Timeline`}</h1>
+        {isPending ? null : (
+          <h1 className="mb-12 text-5xl font-bold text-slate-200">{`${
+            data && data.pages[0][0].user.username
+          }'s Timeline`}</h1>
         )}
         <Timeline
           data={data}
