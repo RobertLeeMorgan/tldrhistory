@@ -1,12 +1,13 @@
 import Timeline from "../components/timeline/Timeline";
-import Drawer from "../components/drawer/Drawer";
-import SearchBar from "../components/util/SearchBar";
 import { useAuth } from "../context/AuthContext";
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { fetchPosts } from "../util/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
+const SearchBar = lazy(() => import("../components/util/SearchBar"));
+const Drawer = lazy(() => import("../components/drawer/Drawer"));
 
 export default function HomePage() {
   const initialFilter = {
@@ -59,7 +60,7 @@ export default function HomePage() {
     isFetchingNextPage,
     hasNextPage,
     isError,
-    error
+    error,
   } = useInfiniteQuery({
     queryKey: ["posts", filter],
     queryFn: (pageParam) =>
@@ -75,26 +76,30 @@ export default function HomePage() {
     navigate("/login");
     logout();
     toast("Your session has expired, please log in.");
-  } else if (isError){
-    throw error
+  } else if (isError) {
+    throw error;
   }
 
   return (
     <>
-      <SearchBar handleSort={handleSort} />
-      <Drawer onSubmit={handleSubmit} onReset={handleReset} filter={filter} />
+      <Suspense
+        fallback={<></>}
+      >
+        <SearchBar handleSort={handleSort} />
+        <Drawer onSubmit={handleSubmit} onReset={handleReset} filter={filter} />
+      </Suspense>
       <div className="text-center text-neutral-content mt-40">
         <div className="max-w-md">
           {!isAuth.token && (
-            <>
-              <h1 className="mb-5 text-5xl font-bold text-slate-200">
+            <div className='max-w-md'>
+              <h1 className="mb-5 text-4xl md:text-5xl font-bold text-slate-200">
                 TLDR History;
               </h1>
-              <p className="mb-12 text-slate-300 text-lg">
+              <p className="mb-12 px-14 md:px-0 text-slate-300 text-lg">
                 Welcome to TLDR History! A big picture, non-academic visual
                 database of pop world history.
               </p>
-            </>
+            </div>
           )}
           <Timeline
             data={data}
