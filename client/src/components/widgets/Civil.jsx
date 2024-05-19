@@ -5,7 +5,7 @@ export default function Civil({ civil, year }) {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    const yearIndex = Math.floor(year / 100) + 3000;
+    const yearIndex = Math.floor(year / 100) + 50;
 
     if (tableRef.current) {
       const columnWidth = 48;

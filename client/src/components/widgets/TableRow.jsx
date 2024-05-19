@@ -1,6 +1,8 @@
-export default function TableRow({ centuries, continent, rowIndex, row }) {
+import React from 'react';
+
+const TableRow = ({ centuries, continent, rowIndex, row }) => {
   return (
-    <tr key={`${continent}-${rowIndex}`} >
+    <tr key={`${continent}-${rowIndex}`}>
       {rowIndex === 0 && (
         <td className="hidden md:table-cell left-0 h-full fixed bg-slate-950">
           <div className="md:w-40 md:text-nowrap text-center text-slate-300">
@@ -15,7 +17,6 @@ export default function TableRow({ centuries, continent, rowIndex, row }) {
             Math.floor(civilization.end_year / 100) >= century
         );
 
-        // Render civilization names if present, else render an empty cell
         let cellContent;
         if (civilizationsInCell.length > 0) {
           const uniqueCivilizations = civilizationsInCell.filter(
@@ -29,7 +30,7 @@ export default function TableRow({ centuries, continent, rowIndex, row }) {
             );
             const isFirstColumn =
               index === 0 &&
-              colIndex === Math.floor(civilization.start_year / 100) + 3000;
+              colIndex === Math.floor(civilization.start_year / 100) + 50;
 
             if (!isFirstColumn) {
               return null;
@@ -37,7 +38,7 @@ export default function TableRow({ centuries, continent, rowIndex, row }) {
 
             return (
               <td
-                className="text-center text-sm bg-fuchsia-700 border border-slate-900 border-2 rounded-md shadow truncate "
+                className="text-center text-sm bg-fuchsia-700 border border-slate-900 border-2 rounded-md shadow truncate"
                 key={`${continent}-${century}-${rowIndex}-${index}`}
                 colSpan={colspan}
               >
@@ -53,4 +54,6 @@ export default function TableRow({ centuries, continent, rowIndex, row }) {
       })}
     </tr>
   );
-}
+};
+
+export default React.memo(TableRow);

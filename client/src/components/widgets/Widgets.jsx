@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchPopulation, fetchPopular } from "../../util/http";
 import { getCentury, formatNumber } from "../../util/formatWidget";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Stats from "./Stats";
 
 export default function Widgets({year}) {
@@ -10,6 +10,9 @@ export default function Widgets({year}) {
     year_start: -300000,
     year_end: -200001,
   });
+
+  const memoizedPopulation = useMemo(() => population, [population]);
+  const century = useMemo(() => getCentury(year), [year]);
 
   const { data } = useQuery({
     queryKey: ["population"],
@@ -43,12 +46,12 @@ export default function Widgets({year}) {
     <>
       <div className="stats bg-purple-800 stats-vertical border bottom-0 left:0 md:right-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-min ">
         <Stats
-          value={getCentury(year)}
+          value={century}
           desc={year > 0 ? "Century CE" : "Century BCE"}
         />
         <Stats
           title="Global Population"
-          value={formatNumber(population.population)}
+          value={formatNumber(memoizedPopulation.population)}
         />
         <Stats
           title="Most Popular"

@@ -1,11 +1,12 @@
-import { useMemo } from "react";
-import TableHeader from "./TableHeader";
-import TableBody from "./TableBody";
+import { useMemo, lazy, Suspense } from "react";
+
+const TableHeader = lazy(() => import("./TableHeader"));
+const TableBody = lazy(() => import("./TableBody"));
 
 export default function Table({ civil }) {
   const centuries = useMemo(() => {
     const centuriesArray = [];
-    for (let century = -3000; century <= 30; century++) {
+    for (let century = -50; century <= 25; century++) {
       if (century !== 0) {
         centuriesArray.push(century);
       }
@@ -18,9 +19,15 @@ export default function Table({ civil }) {
   }, [civil]);
 
   return (
-    <table className="table-fixed w-12 bg-gray-900 pb-4">
-      <TableHeader centuries={centuries}/>
-      <TableBody centuries={centuries} continents={continents} civil={civil}/>
-    </table>
+    <Suspense fallback={<></>}>
+      <table className="table-fixed w-12 bg-gray-900 pb-4">
+        <TableHeader centuries={centuries} />
+        <TableBody
+          centuries={centuries}
+          continents={continents}
+          civil={civil}
+        />
+      </table>
+    </Suspense>
   );
 }
