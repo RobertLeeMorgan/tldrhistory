@@ -1,13 +1,13 @@
 import Timeline from "../components/timeline/Timeline";
 import { useAuth } from "../context/AuthContext";
-import { useState, lazy, Suspense } from "react";
+import { useState, } from "react";
 import { fetchPosts } from "../util/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const SearchBar = lazy(() => import("../components/util/SearchBar"));
-const Drawer = lazy(() => import("../components/drawer/Drawer"));
+import SearchBar from "../components/util/SearchBar";
+import Drawer from "../components/drawer/Drawer";
 
 export default function HomePage() {
   const initialFilter = {
@@ -82,12 +82,10 @@ export default function HomePage() {
 
   return (
     <>
-      <Suspense
-        fallback={<></>}
-      >
+
         <SearchBar handleSort={handleSort} />
         <Drawer onSubmit={handleSubmit} onReset={handleReset} filter={filter} />
-      </Suspense>
+
       <div className="text-center text-neutral-content mt-40">
         <div className="max-w-md">
           {!isAuth.token && (

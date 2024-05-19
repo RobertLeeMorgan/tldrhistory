@@ -1,1 +1,0 @@
-import{j as s}from"./index--1AfnbEZ.js";function r({centuries:t}){return s.jsx("thead",{children:s.jsxs("tr",{children:[s.jsx("th",{className:"w-12"}),t.map(e=>s.jsx("th",{className:"w-12 text-sm font-normal"},e))]})})}export{r as default};
