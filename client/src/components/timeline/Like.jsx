@@ -4,12 +4,12 @@ import { useInteractionContext } from "../../context/InteractionContext";
 
 export default function Like({ liked, id }) {
   const { isAuth} = useAuth();
-  const { setInteractionData } = useInteractionContext();
+  const { setLikeId } = useInteractionContext();
   const navigate = useNavigate();
 
   function handleClick() {
     if (isAuth.token) {
-      setInteractionData(id, "like");
+      setLikeId(id);
     } else {
       navigate("/login");
     }

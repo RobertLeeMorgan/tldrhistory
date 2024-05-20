@@ -10,7 +10,7 @@ import DeleteModal from "../util/DeleteModal";
 export default function DeleteArticle() {
   const navigate = useNavigate();
   const { isAuth, logout } = useAuth();
-  const { postId } = useInteractionContext();
+  const { deleteId } = useInteractionContext();
 
   const { mutate, isPending, isError, error, isSuccess, reset } = useMutation({
     mutationFn: deleteArticle,
@@ -26,7 +26,7 @@ export default function DeleteArticle() {
 
   useEffect(() => {
     if (isSuccess) {
-      document.getElementById(`my_modal_${postId}`).close();
+      document.getElementById(`my_modal_${deleteId}`).close();
       queryClient.invalidateQueries({ queryKey: ["posts"] });
       toast.success("Your article has been deleted!");
       reset();
@@ -34,8 +34,8 @@ export default function DeleteArticle() {
     [isSuccess];
   });
 
-  function handleSubmit() {
-    mutate({ id: postId, token: isAuth.token });
+  function handleSubmit(id) {
+    mutate({ id, token: isAuth.token });
   }
   return <DeleteModal handleDelete={handleSubmit} isPending={isPending} />;
 }

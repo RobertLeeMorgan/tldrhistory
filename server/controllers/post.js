@@ -125,6 +125,7 @@ exports.edit = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.body.id);
+
     if (!post) {
       return res.status(404).json({ message: "Post not found." });
     }

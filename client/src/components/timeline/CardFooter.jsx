@@ -5,11 +5,11 @@ import Like from "./Like";
 
 export default function CardFooter({ id, username, liked, userId, created }) {
   const { isAuth } = useAuth();
-  const { setInteractionData, postId } = useInteractionContext();
+  const { setDeleteId, deleteId } = useInteractionContext();
 
   function handleDelete() {
-    setInteractionData(id, "delete");
-    document.getElementById(`my_modal_${postId}`).showModal();
+    setDeleteId(id);
+    document.getElementById(`my_modal_${deleteId}`).showModal();
   }
 
   return (

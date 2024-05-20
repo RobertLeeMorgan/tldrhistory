@@ -1,10 +1,10 @@
 import { useInteractionContext } from '../../context/InteractionContext';
 
 export default function DeleteModal({ handleDelete, isPending }) {
-  const { postId } = useInteractionContext();
+  const { deleteId } = useInteractionContext();
 
   return (
-    <dialog id={`my_modal_${postId}`} className='modal z-50'>
+    <dialog id={`my_modal_${deleteId}`} className='modal z-50'>
       <div className='modal-box'>
         <h3 className="font-bold text-lg">Delete</h3>
         <p className="py-4">
@@ -17,7 +17,7 @@ export default function DeleteModal({ handleDelete, isPending }) {
               Deleting
             </button>
           ) : (
-            <button className="btn btn-secondary" onClick={() => handleDelete(postId)}>
+            <button className="btn btn-secondary" onClick={() => handleDelete(deleteId)}>
               Delete
             </button>
           )}

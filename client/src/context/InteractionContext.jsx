@@ -5,16 +5,11 @@ const InteractionContext = createContext();
 export const useInteractionContext = () => useContext(InteractionContext);
 
 export const InteractionProvider = ({ children }) => {
-  const [postId, setPostId] = useState(null);
-  const [actionType, setActionType] = useState(null);
-
-  const setInteractionData = (id, type) => {
-    setPostId(id);
-    setActionType(type);
-  };
+  const [deleteId, setDeleteId] = useState(null);
+  const [likeId, setLikeId] = useState(null);
 
   return (
-    <InteractionContext.Provider value={{ postId, actionType, setInteractionData }}>
+    <InteractionContext.Provider value={{ deleteId, likeId, setDeleteId, setLikeId }}>
       {children}
     </InteractionContext.Provider>
   );

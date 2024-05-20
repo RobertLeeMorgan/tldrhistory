@@ -8,7 +8,7 @@ import { useInteractionContext } from "../../context/InteractionContext";
 
 export default function LikeArticle() {
   const { isAuth, logout } = useAuth();
-  const { postId, setInteractionData } = useInteractionContext();
+  const { likeId, setLikeId } = useInteractionContext();
   const navigate = useNavigate();
 
   const {
@@ -23,11 +23,11 @@ export default function LikeArticle() {
   });
 
   useEffect(() => {
-    if (postId) {
-      likeMutate({ id: postId, token: isAuth.token });
-      setInteractionData(null, "like")
+    if (likeId) {
+      likeMutate({ id: likeId, token: isAuth.token });
+      setLikeId(null)
     }
-  }, [postId, isAuth.token, likeMutate, setInteractionData]);
+  }, [likeId, isAuth.token, likeMutate, setLikeId]);
 
   if (isError && error.message === "jwt expired") {
     logout();
