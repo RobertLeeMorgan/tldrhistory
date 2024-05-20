@@ -139,6 +139,30 @@ exports.delete = async (req, res, next) => {
   }
 };
 
+exports.delete = async (req, res, next) => {
+  try {
+    const postId = req.body.id;
+    const post = await Post.findByPk(postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found." });
+    }
+    if (post.userId !== req.id) {
+      return res.status(403).json({ message: "Not authorized." });
+    }
+
+    const likes = await Like.findAll({ where: { postId } });
+    for (const like of likes) {
+      await like.destroy();
+    }
+
+    await post.destroy();
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.like = async (req, res, next) => {
   try {
     const liked = await Like.findOne({
