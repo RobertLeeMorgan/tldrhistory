@@ -7,8 +7,8 @@ import Hero from "../components/util/Hero";
 export default function RootLayout() {
   return (
     <>
-      <Nav />
       <Hero>
+      <Nav />
       <Outlet />
       <ToastContainer
         position="top-center"

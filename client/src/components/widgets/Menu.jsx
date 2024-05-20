@@ -11,6 +11,7 @@ export default function Menu({
         <Link
           className="btn btn-circle btn-secondary drawer-button mb-3 border border-black btn-md xl:btn-lg border-2 hover:border-gray-300 hover:border"
           to="/post"
+          aria-label="Create article"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,6 +33,7 @@ export default function Menu({
         <label
           htmlFor="my-drawer"
           className="btn drawer-button z-50 btn-circle btn-md xl:btn-lg mb-3 border border-black hover:border-gray-400 hover:border"
+          aria-label="Search and filter timeline"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +55,7 @@ export default function Menu({
         <button
           onClick={handleSort}
           className="btn btn-circle drawer-button btn-md mb-3 xl:btn-lg border border-black hover:border-gray-400 hover:border-1"
+          aria-label="Sort timeline"
         >
           <svg
             fill="currentColor"
@@ -82,6 +85,7 @@ export default function Menu({
           onClick={() => {
             handleClick();
           }}
+          aria-label="Display widgets"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

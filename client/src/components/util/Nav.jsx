@@ -50,7 +50,7 @@ export default function Nav() {
                 className="btn btn-ghost btn-circle btn-lg avatar mx-8"
               >
                 <div className="w-12 rounded-full">
-                  <img alt="Profile picture" src="/genghis.jpg" />
+                  <img alt="Profile picture" src="/genghis.webp" />
                 </div>
               </div>
               <ul

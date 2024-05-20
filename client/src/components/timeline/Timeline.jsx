@@ -1,6 +1,9 @@
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
-import TimelinePoint from "./TimelinePoint";
+import { Suspense, useEffect, lazy } from "react";
+
+const DeleteArticle = lazy(() => import("./DeleteArticle"));
+const LikeArticle = lazy(() => import("./LikeArticle"));
+const TimelinePoint = lazy(() => import("./TimelinePoint"));
 
 export default function Timeline({
   data,
@@ -30,36 +33,42 @@ export default function Timeline({
   }
 
   return (
-    <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical my-5 mb-60">
-      {data.pages &&
-        data.pages.map((page, pageIndex) =>
-          page.map((e, cardIndex, arr) => {
-            const isLastCard =
-              pageIndex === data.pages.length - 1 &&
-              cardIndex === arr.length - 1;
-
-            return (
-              <TimelinePoint
-                liked={e.liked}
-                details={e}
-                key={e.id}
-                id={e.id}
-                even={cardIndex % 2 === 0}
-                innerRef={isLastCard ? ref : null}
-              />
-            );
-          })
+    <>
+      <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical my-5 mb-60">
+        {data.pages &&
+          data.pages.map((page, pageIndex) =>
+            page.map((e, cardIndex, arr) => {
+              const isLastCard =
+                pageIndex === data.pages.length - 1 &&
+                cardIndex === arr.length - 1;
+              return (
+                <Suspense key={e.id} fallback={<></>}>
+                  <TimelinePoint
+                    liked={e.liked}
+                    details={e}
+                    id={e.id}
+                    even={cardIndex % 2 === 0}
+                    innerRef={isLastCard ? ref : null}
+                  />
+                </Suspense>
+              );
+            })
+          )}
+        {!hasNextPage && (
+          <p className="text-center font-mono italic text-slate-100 mt-5 text-xl">
+            You have reached the end of time.
+          </p>
         )}
-      {!hasNextPage && (
-        <p className="text-center font-mono italic text-slate-100 mt-5 text-xl">
-          You have reached the end of time.
-        </p>
-      )}
-      {isFetchingNextPage && (
-        <div className="flex justify-center items-center h-full mt-5">
-          <span className="loading loading-spinner loading-md"></span>
-        </div>
-      )}
-    </ul>
+        {isFetchingNextPage && (
+          <div className="flex justify-center items-center h-full mt-5">
+            <span className="loading loading-spinner loading-md"></span>
+          </div>
+        )}
+      </ul>
+      <Suspense fallback={<></>}>
+        <DeleteArticle />
+        <LikeArticle />
+      </Suspense>
+    </>
   );
 }

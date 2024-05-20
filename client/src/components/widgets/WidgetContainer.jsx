@@ -1,10 +1,10 @@
-import Widgets from "./Widgets";
-import Civil from "./Civil";
 import { fetchCivil } from "../../util/http";
 import { useQuery } from "@tanstack/react-query";
 import { useYear } from "../../context/YearContext";
+import Widgets from "../widgets/Widgets";
+import Civil from "../widgets/Civil";
 
-export default function WidgetContainter({ widgetDisplay }) {
+export default function WidgetContainter() {
   const { year } = useYear();
 
   const { data: civil } = useQuery({
@@ -14,17 +14,13 @@ export default function WidgetContainter({ widgetDisplay }) {
   });
 
   return (
-    <div
-      className={`${
-        widgetDisplay ? "translate-y-0" : "translate-y-full"
-      } fixed w-screen bottom-0 z-30 transform duration-300 ease-in-out`}
-    >
+    <>
       {civil && (
         <>
           <Widgets year={year} />
           <Civil civil={civil} year={year} />
         </>
       )}
-    </div>
+    </>
   );
 }

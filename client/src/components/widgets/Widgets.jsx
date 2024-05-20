@@ -1,18 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchPopulation, fetchPopular } from "../../util/http";
-import { getCentury, formatNumber } from "../../util/formatWidget";
-import { useState, useEffect, useMemo } from "react";
+import { getCentury, getSuffix, formatNumber } from "../../util/formatWidget";
+import { useState, useEffect } from "react";
 import Stats from "./Stats";
 
-export default function Widgets({year}) {
+export default function Widgets({ year }) {
   const [population, setPopulation] = useState({
     population: 10000,
     year_start: -300000,
     year_end: -200001,
   });
+  const [century, setCentury] = useState();
 
-  const memoizedPopulation = useMemo(() => population, [population]);
-  const century = useMemo(() => getCentury(year), [year]);
+  let calculatedCentury = getCentury(year);
+  const centurySuffix = getSuffix(century);
+
+  useEffect(() => {
+    if (calculatedCentury !== century) {
+      setCentury(calculatedCentury);
+    }
+  }, [century, calculatedCentury]);
 
   const { data } = useQuery({
     queryKey: ["population"],
@@ -21,22 +28,21 @@ export default function Widgets({year}) {
   });
 
   const { data: popular } = useQuery({
-    queryKey: ["popular", year],
-    queryFn: () => fetchPopular(year),
+    queryKey: ["popular", century],
+    queryFn: () => fetchPopular(century),
     throwOnError: true,
   });
 
   useEffect(() => {
     if (data && data.population) {
-      for (let i = 0; i < data.population.length; i++) {
-        const range = data.population[i];
-        if (year >= range.year_start && year <= range.year_end) {
-          setPopulation(range);
-          return;
-        }
+      const range = data.population.find(
+        (range) => year >= range.year_start && year <= range.year_end
+      );
+      if (range && range !== population) {
+        setPopulation(range);
       }
     }
-  }, [data, year]);
+  }, [data, year, population]);
 
   const name = popular && popular.length > 0 ? popular[0]["post.name"] : "";
   const type = popular && popular.length > 0 ? popular[0]["post.type"] : "";
@@ -46,12 +52,12 @@ export default function Widgets({year}) {
     <>
       <div className="stats bg-purple-800 stats-vertical border bottom-0 left:0 md:right-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-min ">
         <Stats
-          value={century}
-          desc={year > 0 ? "Century CE" : "Century BCE"}
+          value={centurySuffix.charAt(0) === "-" ? centurySuffix.slice(1) : centurySuffix}
+          desc={centurySuffix.charAt(0) === "-" ? "Century BCE" : "Century CE"}
         />
         <Stats
           title="Global Population"
-          value={formatNumber(memoizedPopulation.population)}
+          value={formatNumber(population.population)}
         />
         <Stats
           title="Most Popular"
@@ -60,9 +66,7 @@ export default function Widgets({year}) {
             type.charAt(0).toUpperCase() + type.slice(1)
           }, ${likes} like(s)`}
           format={`${
-            name.length < 8
-              ? "text-xl leading-6"
-              : "text-sm leading-2"
+            name.length < 8 ? "text-xl leading-6" : "text-sm leading-2"
           } md:text-xl md:leading-5 text-slate-300 font-semibold text-ellipsis overflow-hidden text-wrap w-40 text-center`}
         />
       </div>

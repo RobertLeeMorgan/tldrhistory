@@ -11,10 +11,10 @@ export default function Civil({ civil, year }) {
       const columnWidth = 48;
       const containerWidth = tableRef.current.clientWidth - 150;
       const scrollPosition = yearIndex * columnWidth - containerWidth / 2;
-
       tableRef.current.scrollLeft = scrollPosition;
     }
   }, [year]);
+
   return (
     <div
       className='overflow-hidden scroll-smooth'

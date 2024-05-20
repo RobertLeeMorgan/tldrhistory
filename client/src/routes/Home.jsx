@@ -82,16 +82,10 @@ export default function HomePage() {
 
   return (
     <>
-      <Suspense
-        fallback={<></>}
-      >
-        <SearchBar handleSort={handleSort} />
-        <Drawer onSubmit={handleSubmit} onReset={handleReset} filter={filter} />
-      </Suspense>
       <div className="text-center text-neutral-content mt-40">
         <div className="max-w-md">
           {!isAuth.token && (
-            <div className='max-w-md'>
+            <div className="max-w-md">
               <h1 className="mb-5 text-4xl md:text-5xl font-bold text-slate-200">
                 TLDR History;
               </h1>
@@ -110,6 +104,10 @@ export default function HomePage() {
           />
         </div>
       </div>
+      <Suspense fallback={<></>}>
+        <SearchBar handleSort={handleSort} />
+        <Drawer onSubmit={handleSubmit} onReset={handleReset} filter={filter} />
+      </Suspense>
     </>
   );
 }

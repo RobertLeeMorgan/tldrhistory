@@ -14,6 +14,7 @@ import RootLayout from "./routes/Root";
 import Edit from "./routes/Edit";
 import User from "./routes/User";
 import { YearProvider } from "./context/YearContext";
+import { InteractionProvider } from "./context/InteractionContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 function ProtectedRoute({ element }) {
@@ -41,9 +42,11 @@ function App() {
   return (
     <AuthProvider>
       <YearProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-        </QueryClientProvider>
+        <InteractionProvider>
+          <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+          </QueryClientProvider>
+        </InteractionProvider>
       </YearProvider>
     </AuthProvider>
   );

@@ -5,7 +5,7 @@ const YearContext = createContext();
 export const useYear = () => useContext(YearContext);
 
 export const YearProvider = ({ children }) => {
-  const [year, setYear] = useState(null);
+  const [year, setYear] = useState(-300000);
 
   const updateYear = (newYear) => {
     setYear(newYear);

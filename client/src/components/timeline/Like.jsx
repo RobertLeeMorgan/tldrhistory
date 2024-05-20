@@ -1,35 +1,15 @@
-import { queryClient, like } from "../../util/http";
-import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { toast } from "react-toastify";
+import { useInteractionContext } from "../../context/InteractionContext";
 
 export default function Like({ liked, id }) {
-  const { isAuth, logout } = useAuth();
+  const { isAuth} = useAuth();
+  const { setInteractionData } = useInteractionContext();
   const navigate = useNavigate();
-
-  const {
-    mutate: likeMutate,
-    isError,
-    error,
-  } = useMutation({
-    mutationFn: like,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
-  });
-
-  if (isError && error.message === "jwt expired") {
-    logout();
-    toast("Your session has expired, please log in again.");
-    navigate("/login");
-  } else if (isError) {
-    toast.error("Failed to like article, please try again later.");
-  }
 
   function handleClick() {
     if (isAuth.token) {
-      likeMutate({ id, token: isAuth.token });
+      setInteractionData(id, "like");
     } else {
       navigate("/login");
     }
@@ -37,8 +17,9 @@ export default function Like({ liked, id }) {
 
   return (
     <button
-      onClick={handleClick}
+      onClick={() => handleClick()}
       className="btn btn-ghost absolute top-2 btn-sm right-1"
+      aria-label="Like article"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -1,47 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useYear } from "../../context/YearContext";
-import { useAuth } from "../../context/AuthContext";
 import formatDate from "../../util/formatDate";
 import { extractYear } from "../../util/formatWidget";
-import { deleteArticle, queryClient } from "../../util/http";
-import { toast } from "react-toastify";
-import DeleteModal from "../util/DeleteModal";
 import Card from "./Card";
 
 export default function TimelinePoint({ details, even, innerRef }) {
-  const navigate = useNavigate();
-  const { isAuth, logout } = useAuth();
   const { updateYear } = useYear();
   const { ref, inView, entry } = useInView({
     rootMargin: "0px 0px -70% 0px",
   });
-
-  const { mutate, isPending, isError, error } = useMutation({
-    mutationFn: deleteArticle,
-    optimisticResponse: () => {
-      return !details.liked;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts", "civil"] });
-      toast.success("Your article has been deleted!");
-      navigate("/");
-    },
-  });
-
-  if(isError && error.message === 'jwt expired') {
-    navigate('/login')
-    logout()
-    toast('Your session has expired, please log back in.')
-  }
-
-  const isMobile = window.innerWidth <= 768;
-
-  function handleSubmit() {
-    mutate({ id: details.id, token: isAuth.token });
-  }
 
   useEffect(() => {
     if (inView) {
@@ -56,13 +24,7 @@ export default function TimelinePoint({ details, even, innerRef }) {
   }, [inView, entry, updateYear]);
 
   return (
-    <>
-      <DeleteModal
-        handleDelete={handleSubmit}
-        isPending={isPending}
-        id={details.id}
-      />
-      <li>
+      <li  ref={innerRef}>
         <div className="timeline-middle w-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,14 +59,6 @@ export default function TimelinePoint({ details, even, innerRef }) {
               {formatDate(details.start)}
             </time>
           </div>
-          <div
-            className="card bg-base-100 shadow-xl"
-            style={{
-              width: "clamp(350px, 40vw, 550px)",
-              ...(isMobile && { width: "max(350px, 70vw)" }),
-            }}
-            ref={innerRef}
-          >
             <Card
               liked={details.liked}
               key={details.id}
@@ -121,10 +75,8 @@ export default function TimelinePoint({ details, even, innerRef }) {
               userId={details.userId}
               created={details.createdAt}
             />
-          </div>
         </div>
         <hr />
       </li>
-    </>
   );
 }

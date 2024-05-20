@@ -62,8 +62,8 @@ export async function fetchPopulation() {
   return population;
 }
 
-export async function fetchPopular(year) {
-  const res = await fetch(`/api/popular?year=${year}`);
+export async function fetchPopular(century) {
+  const res = await fetch(`/api/popular?year=${century}`);
   await handleResponseError(res);
   const population = await res.json();
   return population;

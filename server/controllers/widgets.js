@@ -24,8 +24,8 @@ exports.getPopular = async (req, res, next) => {
       return res.status(200);
     }
 
-    const centuryStartYear = Math.floor(year / 100) * 100;
-    const centuryEndYear = centuryStartYear + 99;
+    const centuryStartYear = year * 100 - 99;
+    const centuryEndYear = year * 100;
 
     const popular = await Like.findAll({
       attributes: [
@@ -39,8 +39,10 @@ exports.getPopular = async (req, res, next) => {
         {
           model: Post,
           where: {
-            start_year: { [Sequelize.Op.gte]: centuryStartYear },
-            start_year: { [Sequelize.Op.lte]: centuryEndYear },
+            [Sequelize.Op.and]: [
+              { start_year: { [Sequelize.Op.gte]: centuryStartYear } },
+              { start_year: { [Sequelize.Op.lte]: centuryEndYear } }
+            ]
           },
           attributes: ["name", "type"],
           raw: true,

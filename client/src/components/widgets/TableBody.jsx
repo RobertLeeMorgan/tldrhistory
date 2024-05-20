@@ -1,6 +1,4 @@
-import { Suspense, lazy } from "react";
-
-const TableRow = lazy(() => import("./TableRow"));
+import TableRow from "./TableRow"
 
 export default function TableBody({ centuries, continents, civil }) {
   return (
@@ -46,14 +44,13 @@ export default function TableBody({ centuries, continents, civil }) {
         });
 
         return rows.map((row, rowIndex) => (
-          <Suspense key={`${continent}-${rowIndex}`} fallback={<></>}>
             <TableRow
               continent={continent}
               rowIndex={rowIndex}
               centuries={centuries}
               row={row}
+              key={`${continent}-${rowIndex}`} fallback={<></>}
             />
-          </Suspense>
         ));
       })}
     </tbody>
