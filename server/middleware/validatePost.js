@@ -59,7 +59,7 @@ const validatePost = [
   }),
   check("cause", "Please enter a valid cause.")
     .isString()
-    .isLength({ min: 1, max:100 })
+    .isLength({ max:100 })
     .trim()
     .escape(),
   check("subjectId", "Subject not recognised").custom(async (value) => {

@@ -7,7 +7,7 @@ export default function Error() {
   return (
     <>
       <Nav />
-      <Hero image={"/bg-1.jpg"}>
+      <Hero image={"/bg-error.webp"}>
         <div className="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
           <h1 className="font-bold mb-2">Oops! Something went wrong.</h1>
           <p>Status: {error.status}</p>

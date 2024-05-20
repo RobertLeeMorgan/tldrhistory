@@ -77,6 +77,18 @@ exports.getUser = async (req, res, next) => {
   }
 };
 
+exports.getUsername = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: ['username'],
+      raw: true
+    });
+    res.json({ user });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getValues = async (req, res, next) => {
   try {
     const countries = await Country.findAll({

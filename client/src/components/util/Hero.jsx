@@ -9,22 +9,22 @@ export default function Hero({ children, image }) {
   } else {
     switch (location.pathname) {
       case "/":
-        backgroundImage = "/bg-4.webp";
+        backgroundImage = "/bg-home.webp";
         break;
       case "/login":
-        backgroundImage = "/bg-2.webp";
+        backgroundImage = "/bg-login.webp";
         break;
       case "/register":
-        backgroundImage = "/bg-6.webp";
+        backgroundImage = "/bg-login.webp";
         break;
       case "/post":
-        backgroundImage = "/bg-5.webp";
+        backgroundImage = "/bg-post.webp";
         break;
       default:
         if (location.pathname.startsWith("/user/")) {
-          backgroundImage = "/bg-3.webp";
+          backgroundImage = "/bg-user.webp";
         } else if (location.pathname.startsWith("/edit/")) {
-          backgroundImage = "/bg-5.webp";
+          backgroundImage = "/bg-post.webp";
         }
         break;
     }

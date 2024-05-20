@@ -16,6 +16,8 @@ router.get("/api/form", isAuth, getAritcles.getValues);
 
 router.get("/api/user/:id", allowAuth, getAritcles.getUser);
 
+router.get("/api/username/:id", getAritcles.getUsername);
+
 router.get("/api/edit/:id", isAuth, getAritcles.getArticle);
 
 router.post("/api/edit/:id", isAuth, validatePost, postArticles.edit);

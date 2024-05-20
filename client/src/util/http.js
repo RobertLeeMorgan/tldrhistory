@@ -46,6 +46,13 @@ export async function fetchValues({ token }) {
   return values;
 }
 
+export async function fetchUsername({ id }) {
+  const res = await fetch(`/api/username/${id}`);
+  await handleResponseError(res);
+  const username = await res.json();
+  return username;
+}
+
 export async function fetchArticle({ id, token }) {
   const res = await fetch(`/api/edit/${id}`, {
     headers: { Authorization: "Bearer " + token },
