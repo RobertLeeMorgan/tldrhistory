@@ -70,4 +70,6 @@ Post.hasMany(Like, { foreignKey: "postId" });
 
 sequelize.sync().catch(() => {});
 
+console.log("server running")
+
 app.listen(process.env.PORT || 3000);
