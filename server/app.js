@@ -17,6 +17,9 @@ const authRoutes = require("./routes/auth");
 const widgetRoutes = require("./routes/widgets");
 
 const app = express();
+const dotenv = require("dotenv")
+
+dotenv.config()
 
 app.use(bodyParser.json());
 app.use(express.static("dist"));
@@ -70,6 +73,11 @@ Post.hasMany(Like, { foreignKey: "postId" });
 
 sequelize.sync().catch(() => {});
 
-console.log("server running")
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
-app.listen(process.env.PORT || 3000);
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Backend running on port ${PORT}`);
+  });
+}
+

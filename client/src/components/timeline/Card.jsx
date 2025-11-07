@@ -23,7 +23,7 @@ export default function Card({
       className="card bg-base-100 shadow-xl"
       style={{
         width: "clamp(350px, 40vw, 550px)",
-        ...(isMobile && { width: "max(350px, 70vw)" }),
+        ...(isMobile && { width: "clamp(250px, 90vw, 400px)" }),
       }}
     >
       <div className="card-body">
