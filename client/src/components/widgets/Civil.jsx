@@ -9,17 +9,14 @@ export default function Civil({ civil, year }) {
 
     if (tableRef.current) {
       const columnWidth = 48;
-      const containerWidth = tableRef.current.clientWidth - 150;
+      const containerWidth = tableRef.current.clientWidth;
       const scrollPosition = yearIndex * columnWidth - containerWidth / 2;
-      tableRef.current.scrollLeft = scrollPosition;
+      tableRef.current.scrollTo({ left: scrollPosition, behavior: "smooth" });
     }
   }, [year]);
 
   return (
-    <div
-      className='overflow-hidden scroll-smooth'
-      ref={tableRef}
-    >
+    <div className="overflow-hidden scroll-smooth" ref={tableRef}>
       <Table civil={civil} />
     </div>
   );
