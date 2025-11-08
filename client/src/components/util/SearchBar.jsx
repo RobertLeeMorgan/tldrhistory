@@ -20,7 +20,7 @@ export default function SearchBar({ handleSort }) {
       <div
         className={`${
           widgetDisplay ? "translate-y-0" : "translate-y-full"
-        } fixed w-screen bottom-0 z-30 transform duration-300 ease-in-out`}
+        } fixed w-screen bottom-0 z-30 left-0 transform duration-300 ease-in-out`}
       >
         {widgetDisplay && (
           <Suspense fallback={<></>}>

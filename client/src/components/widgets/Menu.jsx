@@ -6,7 +6,7 @@ export default function Menu({
   handleSort,
 }) {
   return (
-    <div className="menu fixed z-40 top-28 right-0 lg:right-2 xl:top-20 xl:right-4 2xl:right-6 2xl:top-28 w-max">
+    <div className="menu fixed z-40 bottom-72 sm:bottom-64 right-0 lg:right-2 xl:right-4 2xl:right-6 2xl:top-28 w-max">
       <div className="tooltip tooltip-left" data-tip="Create article">
         <Link
           className="btn btn-circle btn-secondary drawer-button mb-3 border border-black btn-md xl:btn-lg border-2 hover:border-gray-300 hover:border"

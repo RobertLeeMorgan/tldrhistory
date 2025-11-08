@@ -30,18 +30,16 @@ export default function Hero({ children, image }) {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      {/* Fixed background layer */}
+    <div className="hero min-h-screen">
       <div
-        className="fixed inset-0 -z-10 bg-cover bg-center"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
-      ></div>
-
-      {/* Optional overlay */}
-      <div className="absolute inset-0 bg-black/20 -z-10"></div>
-
-      {/* Foreground content */}
-      <div className="hero min-h-screen">{children}</div>
+        className="sm:bottom-0 bottom-[-5vh] fixed left-0 w-full sm:h-full h-[112vh] -z-10 bg-no-repeat bg-center"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+        }}
+      />
+      <div className="fixed sm:bottom-0 bottom-[-5vh] left-0 w-full sm:h-full h-[112vh] -z-5 bg-black/20" />
+      <div className="relative z-0">{children}</div>
     </div>
   );
 }

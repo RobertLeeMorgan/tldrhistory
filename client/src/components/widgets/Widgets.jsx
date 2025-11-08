@@ -50,7 +50,7 @@ export default function Widgets({ year }) {
 
   return (
     <>
-      <div className="stats bg-purple-800 stats-vertical border bottom-0 md:right-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-32 sm:w-44 md:w-56 justify-center">
+      <div className="stats bg-purple-800 stats-vertical border bottom-0 md:right-0 border-black h-full overflow-hidden rounded-none shadow fixed z-50 w-32 sm:w-44 md:w-56 justify-center ">
         <Stats
           value={centurySuffix.charAt(0) === "-" ? centurySuffix.slice(1) : centurySuffix}
           desc={centurySuffix.charAt(0) === "-" ? "Century BCE" : "Century CE"}
@@ -67,7 +67,7 @@ export default function Widgets({ year }) {
           }, ${likes} like(s)`}
           format={`${
             name.length < 8 ? "text-xl leading-6" : "text-sm leading-2"
-          } md:text-xl md:leading-5 text-slate-300 font-semibold text-ellipsis overflow-hidden text-wrap w-40 text-center text-ellipsis`}
+          } md:text-xl md:leading-5 text-slate-300 font-semibold text-ellipsis overflow-hidden text-wrap w-40 text-center justify-top`}
         />
       </div>
     </>

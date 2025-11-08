@@ -18,7 +18,7 @@ export default function Table({ civil }) {
   }, [civil]);
 
   return (
-    <table className="table-fixed w-12 bg-gray-900 pb-4">
+    <table className="table-fixed border-separate w-12 bg-gray-900 pb-4">
       <TableHeader centuries={centuries} />
       <TableBody centuries={centuries} continents={continents} civil={civil} />
     </table>
